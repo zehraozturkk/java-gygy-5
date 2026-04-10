@@ -1,6 +1,5 @@
 # Banking Application
 
-Basit bir Java konsol bankacılık uygulaması.
 
 ## Özellikler
 
