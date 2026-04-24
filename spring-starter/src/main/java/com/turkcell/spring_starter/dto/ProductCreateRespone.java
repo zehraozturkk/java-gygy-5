@@ -1,12 +1,13 @@
 package com.turkcell.spring_starter.dto;
 
-// bu benim veri tabanı nesnem
+import java.util.UUID;
+
 public class ProductCreateRespone {
-    private int id;
+    private UUID id;
     private String name;
     private double price;
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -18,7 +19,7 @@ public class ProductCreateRespone {
         return price;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
