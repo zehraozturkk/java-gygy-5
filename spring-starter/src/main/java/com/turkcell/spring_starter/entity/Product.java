@@ -1,6 +1,9 @@
 package com.turkcell.spring_starter.entity;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.Set;
+
 
 import org.hibernate.annotations.UuidGenerator;
 
@@ -8,6 +11,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -32,7 +37,13 @@ public class Product {
     private Category category;
 
 
-
+    @ManyToMany
+    @JoinTable( //ara tablo oluşturur. many to many ilişkiler için gerkeli
+        name = "product_tags",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags;
 
     public UUID getId() {
         return id;
@@ -64,6 +75,14 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
 }
