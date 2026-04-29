@@ -79,8 +79,12 @@ public class CategoryServiceImpl {
         //Set<Category> categories = categoryRepository.findByNameLike("%" + query + "%");
 
         String jpql = "select c from Category c where c.name like :query";
-        
-        List<Category> categories = entityManager.createQuery(jpql, resultClass: Category.class).getResultList();
+
+        List<Category> categories = entityManager
+                .createQuery(jpql, Category.class)
+                .setParameter("query", "%" + query + "%")
+                .getResultList();
+                
         List<ListCategoryRespone> responseList = new ArrayList<>();
 
         for (Category category : categories) {
