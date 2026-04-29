@@ -2,22 +2,23 @@ package com.turkcell.spring_starter.repository;
 
 import java.util.Set;
 import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.turkcell.spring_starter.entity.Category;
 
-public interface CategoryRepository extends JpaRepository<Category, UUID>{
-
-    //JPQL sorgusudur. SQL'e benzer ama entity'ler üzerinden sorgu yapar.
-    @Query("SELECT c FROM Category c WHERE c.name = :query")
+@Repository
+public interface CategoryRepository extends JpaRepository<Category, UUID>
+{
+    // 1. JPQL -> Jpa+SQL
+    // 2. SQL -> Saf SQL
+    @Query("Select c from Category c Where c.name LIKE %:query%") // SQL değil JPQL
+    //@Query(value = "Select * from categories c where c.name ilike %:query%", nativeQuery = true) // Düz SQL
     Set<Category> search(String query);
 
 
-    // named querydir 
-    Category findByName(String name);
-
-    
-    
-
+    // 3. Named Queries
+    Set<Category> findByNameLike(String name);
 }

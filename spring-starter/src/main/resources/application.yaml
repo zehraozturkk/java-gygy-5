@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 spring:
   application:
     name: spring-starter
@@ -10,3 +11,17 @@ spring:
     hibernate: #
       ddl-auto: update
     show-sql: true
+=======
+spring:
+    application:
+        name: spring-starter
+    datasource:
+        url: jdbc:postgresql://localhost:5432/eticaret
+        username: admin
+        password: admin
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+>>>>>>> c6a5c71a7816004f60f9ac61c567aa18f5508740

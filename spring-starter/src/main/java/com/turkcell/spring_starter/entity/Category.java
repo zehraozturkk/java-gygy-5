@@ -12,19 +12,18 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "categories")
+@Table(name="categories")
 public class Category {
     @Id
-    @UuidGenerator()
-    @Column(name="category_id")
+    @UuidGenerator
+    @Column(name="id")
     private UUID id;
 
     @Column(name="name", nullable = false, length = 100)
     private String name;
-
-    @OneToMany(mappedBy = "category") //değişken ismidir. category'ye bağlı ürünler
+    
+    @OneToMany(mappedBy = "category") // değişken ismi
     private List<Product> products;
-
 
 
 
@@ -51,5 +50,4 @@ public class Category {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
-
 }
