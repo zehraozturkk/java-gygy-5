@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.turkcell.spring_starter.dto.CreateProductRequest;
-import com.turkcell.spring_starter.dto.CreatedProductResponse;
-import com.turkcell.spring_starter.dto.ListProductRespone;
-import com.turkcell.spring_starter.dto.UpdateProductRequest;
 import com.turkcell.spring_starter.entity.Category;
 import com.turkcell.spring_starter.entity.Product;
 import com.turkcell.spring_starter.repository.CategoryRepository;
@@ -17,77 +15,28 @@ import com.turkcell.spring_starter.repository.ProductRepository;
 @Service
 public class ProductServiceImpl {
     private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
+    private final CategoryServiceImpl categoryServiceImpl;
 
-    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryServiceImpl categoryServiceImpl) {
         this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
+        this.categoryServiceImpl = categoryServiceImpl;
     }
 
-    public CreatedProductResponse create(CreateProductRequest createProductRequest) {
-        Category category = categoryRepository.findById(UUID.fromString(createProductRequest.getCategoryId()))
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+    public void create(@RequestBody CreateProductRequest createProductRequest) {
+
+        Category category = categoryServiceImpl.getById(createProductRequest.categoryId());
+        
+        if (category == null) 
+            throw new RuntimeException("Category not found");
 
         Product product = new Product();
-        product.setName(createProductRequest.getName());
-        product.setDescription(createProductRequest.getDescription());
+        product.setName(createProductRequest.name());
+        product.setDescription(createProductRequest.description());
         product.setCategory(category);
 
-        product = productRepository.save(product);
-
-        CreatedProductResponse response = new CreatedProductResponse();
-        response.setId(product.getId().toString());
-        response.setName(product.getName());
-        response.setDescription(product.getDescription());
-        response.setCategoryId(product.getCategory().getId().toString());
-
-        return response;
+        productRepository.save(product);
+        
     }
-
-    public ListProductRespone getAll() {
-        List<Product> products = productRepository.findAll();
-        ListProductRespone response = new ListProductRespone();
-        response.setProducts(products);
-        return response;
-    }
-
-    public CreatedProductResponse getById(UUID id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        CreatedProductResponse response = new CreatedProductResponse();
-        response.setId(product.getId().toString());
-        response.setName(product.getName());
-        response.setDescription(product.getDescription());
-        response.setCategoryId(product.getCategory().getId().toString());
-
-        return response;
-    }
-
-    public CreatedProductResponse update(UUID id, UpdateProductRequest updateProductRequest) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        Category category = categoryRepository.findById(UUID.fromString(updateProductRequest.getCategoryId()))
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-
-        product.setName(updateProductRequest.getName());
-        product.setDescription(updateProductRequest.getDescription());
-        product.setCategory(category);
-
-        product = productRepository.save(product);
-
-        CreatedProductResponse response = new CreatedProductResponse();
-        response.setId(product.getId().toString());
-        response.setName(product.getName());
-        response.setDescription(product.getDescription());
-        response.setCategoryId(product.getCategory().getId().toString());
-
-        return response;
-    }
-
-    public void delete(UUID id) {
-        productRepository.deleteById(id);
-    }
+ 
 
 }

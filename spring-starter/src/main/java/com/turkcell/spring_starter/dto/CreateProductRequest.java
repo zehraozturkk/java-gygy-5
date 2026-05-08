@@ -1,32 +1,20 @@
 package com.turkcell.spring_starter.dto;
 
-public class CreateProductRequest {
-    private String name;
-    private String description;
-    private String categoryId;
+import java.util.UUID;
 
-    public String getName() {
-        return name;
-    }
+import org.hibernate.validator.constraints.Length;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+import jakarta.validation.constraints.NotBlank;
 
-    public String getDescription() {
-        return description;
-    }
+//java 16 ile gelen record yapısı, immutable bir class oluşturur. constructor, getter, equals, hashcode ve toString metotlarını otomatik olarak oluşturur.
+public record CreateProductRequest(
+    @NotBlank
+    @Length(min=3, max=100)
+    String name,
+    String description,
+    @NotBlank
+    UUID categoryId
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
+) {
 
 }

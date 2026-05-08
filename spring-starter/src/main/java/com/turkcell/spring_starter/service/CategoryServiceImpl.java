@@ -3,6 +3,7 @@ package com.turkcell.spring_starter.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,10 @@ public class CategoryServiceImpl {
         this.entityManager = entityManager;
     }
 
+    public Category getById(UUID id){
+        return categoryRepository.findById(id).orElseThrow(null);
+    }
+    
     public CreatedCategoryResponse create(CreateCategoryRequest createCategoryRequest) {
         // Veritabanında insert-update çalıştır.
         // entity id'e sahipse update
