@@ -1,8 +1,8 @@
 spring:
   application:
-    name: spring-starter
+    name: spring-cqrs
   datasource:
-    url: jdbc:postgresql://localhost:5434/library_db
+    url: jdbc:postgresql://localhost:5434/e-commerce-cqrs  #postgrede bu db'nin var olması gerek
     username: admin
     password: admin123
     driver-class-name: org.postgresql.Driver

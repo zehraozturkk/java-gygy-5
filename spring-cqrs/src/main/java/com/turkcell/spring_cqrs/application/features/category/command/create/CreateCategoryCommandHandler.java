@@ -27,6 +27,7 @@ public class CreateCategoryCommandHandler implements CommandHandler<CreateCatego
     @Override
     public CreatedCategoryResponse handle(CreateCategoryCommand command) 
     {
+        // category'nin aynı isimden var olmaması kuralı 
         categoryBusinessRules.categoryWithSameNameMustNotExist(command.name()); // rules
 
         Category category = categoryMapper.categoryFromCreateCommand(command); // mapping

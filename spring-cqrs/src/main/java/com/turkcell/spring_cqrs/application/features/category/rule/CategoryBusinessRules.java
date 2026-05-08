@@ -12,10 +12,12 @@ public class CategoryBusinessRules {
         this.categoryRepository = categoryRepository;
     }
 
+        // summary yorum satırları eklenebilir o da bu şekilde olur
     /**
      * Verilen isim ile kategori mevcut ise hata fırlatır.
      * @param name Kontrol edilecek isim
      */
+
     public void categoryWithSameNameMustNotExist(String name)
     {
         Category categoryWithSameName = categoryRepository.findByName(name).orElse(null);

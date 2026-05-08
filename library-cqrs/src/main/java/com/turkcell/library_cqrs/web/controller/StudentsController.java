@@ -1,6 +1,7 @@
 package com.turkcell.library_cqrs.web.controller;
 
 import com.turkcell.library_cqrs.application.features.student.command.create.CreateStudentCommand;
+import com.turkcell.library_cqrs.application.features.student.command.create.CreatedStudentResponse;
 import com.turkcell.library_cqrs.core.mediator.Mediator;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class StudentsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer create(@RequestBody CreateStudentCommand command) {
+    public CreatedStudentResponse create(@RequestBody CreateStudentCommand command) {
         return mediator.send(command);
     }
 }
